@@ -1,3 +1,3 @@
-<img src="https://66.media.tumblr.com/0e518940118838b88ce3d0de35d73e1d/tumblr_onno4ft2yJ1r5zq6ao3_250.gifv" alt="april fools"/>
+<img src="https://media1.tenor.com/images/467d353f7e2d43563ce13fddbb213709/tenor.gif?itemid=12136175" alt="april fools"/>
 
 ### Star it to trick others ( ͡ʘ ͜ʖ ͡ʘ)
