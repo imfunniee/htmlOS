@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script>
+            function help() {
+                return "Welcome to the terminal! <br> This is a very simple terminal, but here's some things to help: <br> When running a command, you are running it as the terminal frame. <br>So, to run functions on the main screen, you can use parent.theFunction(),<br> replacing the function with what function you want to run.<br> For example, if you ran parent.forceKillApp('appstore') while the app store was open, it would close it!<br> Go crazy. I may add scripts to run soon."
+            }
+                function addLog(message) {
+                    document.getElementById("log").innerHTML += "<li>" + message + "</li>";
+                }
+
+                function run() {
+                    addLog("Running command " + document.getElementById("input").value);
+                    try {
+                        var response = eval(document.getElementById("input").value) + "<br>";
+                    } catch(e) {
+                        addLog("ERROR: " + e);
+                        return;
+                    }
+                    addLog(response);
+                }
+        </script>
+    </head>
+    <body>
+        <input id="input" value="help()"><button onclick="run()">Run command</button>
+        <ul id="log">
+            <li>Log started. For help with the terminal, run help().</li>
+        </ul>
+    </body>
+</html>

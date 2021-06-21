@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GlizzyOS</title>
+    <link
+    href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+  // Setup
+  function loadFiles() {
+  if (typeof(Storage) != "undefined") {
+    let object = JSON.parse(localStorage.getItem('info')).files;
+    let iconx = 370;
+    let icony = 90;
+    for (const property in object) {
+    document.getElementById("files").innerHTML += `<a onclick="loadFile('${object[property].filepath}')" class="collection-item">${object[property].filepath}</a>`
+    //console.trace(object[property])
+    }
+  } else {
+    alert("Error! Your browser does not support localStorage. This OS will not work as mentioned.")
+  }
+}
+
+
+function loadFile(file) {
+  location.replace("openfile.html?file=" + file)
+}
+  </script>
+</head>
+<body onload="loadFiles()">
+    <div id="files" class="collection">
+      </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

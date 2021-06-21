@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ArobicOS</title>
+    <link
+    href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="style/style.css">
+  <style>
+    body {
+      background-image: url('images/defaultbg.png');
+      background-repeat: repeat;
+    }
+  </style>
+</head>
+<body>
+  <div class="row" id="row">
+    <h1 class="center white-text">Welcome to ArobicOS</h1>
+    <h3 class="center white-text">Let's get you started.</h3>
+    <br>
+    <br>
+    <br>
+      <div class="input-field col s10">
+        <input id="text" type="text" class="text">
+        <label for="text">Username</label>
+      </div>
+      <button onclick="page2()" class="btn btn-green btn-large">Next</button>
+      </div>
+  <script>
+    var usernamesave = "Guest";
+    function page2() {
+      usernamesave = document.getElementById("text").value; // fucked code but this should work
+      let userdata = {
+        "username": usernamesave,
+        "settings": {
+          "lightmode": {
+            "dataname": "lightmode", //im bad
+            "name": "Light Mode",
+            "status": false,
+            "info": "Sets the theme of the OS to white."
+          },
+          "fullscreen": {
+            "dataname": "fullscreen",
+            "name": "Fullscreen Apps",
+            "status": false,
+            "info": "Allows you to quickly press F twice to enable fullscreen."
+          },
+          "forcefullscreen": {
+            "dataname": "forcefullscreen",
+            "name": "Bypass Fullscreen Lock",
+            "status": false,
+            "info": "If fullscreen is enabled, Allows any app to be fullscreened."
+          },
+          "showappversions": {
+            "dataname": "showappversions",
+            "name": "Show App Versions",
+            "status": false,
+            "info": "Show the versions of apps installed on your device."
+          }
+        }
+      }
+
+      document.getElementById("row").innerHTML += `<div class="row"><div class="col s12 m3 l3"> <div class="card blue-grey darken-1">
+        <div id="options" class="card-content white-text">
+          <span class="card-title">Options</span>
+        </div>
+        </div></div></div>`;
+      for (const property in userdata.settings) {
+        document.getElementById("options").innerHTML += `<p>${userdata.settings[property].name}</p>  
+              <div class="switch">
+              <label>
+                Off
+                <input id="${userdata.settings[property].dataname}" type="checkbox">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>`;
+     }
+     document.getElementById("options").innerHTML += `<br><button onclick="saveUser()" class="btn btn-green btn-large">Finish</button>`;
+    }
+    function saveUser() {
+      //IDK WHY I NEED THIS HERE BUT CODE BAD
+      let userdata = {
+        "username": usernamesave,
+        "apps": { // DO THIS HERE DUMBASS FAGGOT LMAOO
+          "settings": {
+            "repo": "settings",
+            "name": "Settings",
+            "version": "0.0.1",
+            "icon": "settings",
+            "color": "blue-grey lighten-3",
+            "cardw": "300px",
+            "cardh": "500px",
+            "framew": "200px",
+            "frameh": "450px",
+            "scale": "1.1",
+            "defaultapp": true,
+            "supportsfullscreen": false
+          },
+          "pkginst": {
+            "repo": "pkginst",
+            "name": "PackageInstaller",
+            "version": "0.0.2",
+            "icon": "get_app",
+            "color": "grey lighten-2",
+            "cardw": "700px",
+            "cardh": "250px",
+            "framew": "600px",
+            "frameh": "200px",
+            "scale": "1.1",
+            "defaultapp": true,
+            "supportsfullscreen": false
+          },
+          "filemanager": {
+            "repo": "filemanager",
+            "name": "Files",
+            "version": "0.0.2",
+            "icon": "folder",
+            "color": "grey lighten-3",
+            "cardw": "400px",
+            "cardh": "700px",
+            "framew": "300px",
+            "frameh": "550px",
+            "scale": "1.1",
+            "defaultapp": true,
+            "supportsfullscreen": false
+          },
+          "appstore": {
+            "repo": "appstore",
+            "name": "AppStore",
+            "version": "0.0.2",
+            "icon": "dashboard",
+            "color": "grey lighten-3",
+            "cardw": "450px",
+            "cardh": "400px",
+            "framew": "350px",
+            "frameh": "250px",
+            "scale": "1.1",
+            "defaultapp": true,
+            "supportsfullscreen": false
+          },
+          "TaskManager": {
+            "repo": "TaskManager",
+            "name": "TaskManager",
+            "version": "0.0.1",
+            "icon": "grid_view",
+            "color": "grey lighten-3",
+            "cardw": "400px",
+            "cardh": "400px",
+            "framew": "400px",
+            "frameh": "350px",
+            "scale": "0.8",
+            "defaultapp": true,
+            "supportsfullscreen": false
+          }
+        },
+        "files": {
+          "welcome.txt": {
+            "filename": "welcome",
+            "filepath": "welcome.txt",
+            "type": "text",
+            "content": "Hello! Welcome to your new operating system, coded only in HTML and JS! Enjoy all the features, and feel free to help on github!"
+          }
+        },
+        "settings": {
+          "lightmode": {
+            "dataname": "lightmode", //im bad
+            "name": "Light Mode",
+            "status": false,
+            "info": "Sets the theme of the OS to white."
+          },
+          "fullscreen": {
+            "dataname": "fullscreen",
+            "name": "Fullscreen Apps",
+            "status": false,
+            "info": "Allows you to quickly press F twice to enable fullscreen."
+          },
+          "forcefullscreen": {
+            "dataname": "forcefullscreen",
+            "name": "Bypass Fullscreen Lock",
+            "status": false,
+            "info": "If fullscreen is enabled, Allows any app to be fullscreened."
+          },
+          "showappversions": {
+            "dataname": "showappversions",
+            "name": "Show App Versions",
+            "status": false,
+            "info": "Show the versions of apps installed on your device."
+          }
+        },
+        "openapps": {//i hate my life
+        }
+      }
+      // THIS IS KINDA BAD BUT I CAN FIX IT LATER SO
+      for (const property in userdata.settings) {
+        if (document.getElementById(userdata.settings[property].dataname).checked == true) {
+          userdata.settings[property].status = true; // WHO WANTS THIS
+        }
+     }
+      localStorage.setItem('info', JSON.stringify(userdata));
+      location.replace("index.html")
+    }
+  $(document).ready(function(){
+    //init jquery shit here
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GlizzyOS</title>
+    <link
+    href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+  // Setup
+  function loadSettings() {
+  if (typeof(Storage) != "undefined") {
+    let object = JSON.parse(localStorage.getItem('info')).settings;
+    let iconx = 370;
+    let icony = 90;
+    for (const property in object) {
+    document.getElementById("settings").innerHTML += `<a id="${object[property].dataname}" onclick="toggle('${object[property].dataname}')" class="collection-item tooltipped" data-position="bottom" data-tooltip="${object[property].info}">${object[property].name}: ${object[property].status}</a>`
+   // console.trace(object[property])
+    }
+  } else {
+    alert("Error! Your browser does not support localStorage. This OS will not work as mentioned.");
+  }
+}
+
+
+function toggle(name) {
+  let pog = JSON.parse(localStorage.getItem('info'));
+  pog.settings[name].status = !pog.settings[name].status;
+  localStorage.setItem('info', JSON.stringify(pog));
+  document.getElementById(pog.settings[name].dataname).innerHTML = `${pog.settings[name].name}: ${pog.settings[name].status}`;
+}
+  </script>
+</head>
+<body onload="loadSettings()">
+    <div id="settings" class="collection">
+      </div>
+      <button class="btn btn-green btn-large waves-effect" onclick="parent.refreshScreen(true);">Apply</button>
+      <!--setting info ig-->
+      <script>
+        //jquery time
+        $(document).ready(function(){
+          $('.tooltipped').tooltip();
+      });
+      </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

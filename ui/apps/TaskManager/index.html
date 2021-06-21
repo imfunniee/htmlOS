@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GlizzyOS</title>
+  <link href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+  Storage.prototype.setObject = function(key, value) {
+    this.setItem(key, JSON.stringify(value));
+  }
+
+  Storage.prototype.getObject = function(key) {
+    return JSON.parse(this.getItem(key));
+  }
+    $(document).ready(function () {
+      $('.collapsible').collapsible();
+    });
+    function updateActiveApps() {
+      document.getElementById("openApps").innerHTML = '';
+      let openApps = JSON.parse(localStorage.getItem('info')).openapps;
+      for (property in openApps) {
+    document.getElementById("openApps").innerHTML += `
+      <li>
+      <div class="collapsible-header">${openApps[property].name}</div>
+      <div class="collapsible-body"><span>${openApps[property].desc}</span><button
+          class="btn btn-red" onclick="forceKillApp('${openApps[property].id}')">Kill</button></div>
+        </li>`
+      }
+    }
+    function forceKillApp(appname) {
+      let tasks = localStorage.getObject('info');
+        delete tasks.openapps[appname];
+        localStorage.setObject('info', tasks);
+      parent.forceKillApp(appname);
+    }
+  </script>
+</head>
+
+<body onload="updateActiveApps()">
+
+  <ul class="collapsible" id="openApps">
+    </ul>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ArobicOS</title>
+    <link
+    href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script>
+
+  function reload() {
+    location.reload();
+  }
+
+      // task manager
+function forceKillApp(app) {
+    var element = document.getElementById(app);
+    element.parentElement.removeChild(element); // stolen straight from stackoverflow
+    document.getElementById("activeapp").innerHTML = "ArobicOS";
+    document.getElementById('TaskManagerframe').contentWindow.updateActiveApps();
+  }
+
+  // Setup
+  function checkLogin() {
+    try {
+  if (typeof(Storage) !== "undefined") {
+    if (JSON.parse(localStorage.getItem('info')).username == null) {
+      location.replace("setup.html")
+    } else {
+      M.toast({html: 'Welcome back, ' + JSON.parse(localStorage.getItem('info')).username + "!"});
+    }
+  } else {
+    alert("Error! Your browser does not support localStorage. This OS will not work as mentioned.");
+  }
+
+  // clear task manager
+  let tasks = localStorage.getObject('info');
+  tasks.openapps = {};
+  localStorage.setObject('info', tasks);
+
+  // settings tings uno?
+  if (JSON.parse(localStorage.getItem('info')).settings.lightmode.status == true) {
+    document.getElementById("body").style = "background-image: url('images/defaultbg_INVERT.png');background-repeat: repeat;";
+  } else {
+    document.getElementById("body").style = "background-image: url('images/defaultbg.png');background-repeat: repeat;";
+  }
+} catch(err) {
+  location.replace("setup.html");
+}
+  }
+
+
+  // so apps and shit
+ // setInterval(function(){ refreshScreen() }, 60 * 1000);
+  </script>
+</head>
+<body onload="checkLogin()" id="body">
+    <nav id="navbar">
+    </nav>
+<script>// THIS SUCKS BUT IT THE ONLY THING I COULD GET TO WORK SO
+  if (JSON.parse(localStorage.getItem('info')).settings.lightmode.status == true) {
+    document.getElementById("navbar").innerHTML += `<div class="nav-wrapper grey lighten-1">
+              <a id="activeapp" class="brand-logo black-text">Start</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+              </ul>
+      </div>`
+  } else {
+    document.getElementById("navbar").innerHTML += `<div class="nav-wrapper grey darken-3">
+              <a id="activeapp" class="brand-logo">Start</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                  <li><a class="modal-trigger" href="#modal2">Help</a></li>
+                  <li class="left"><a id="username" class="modal-trigger" href="#modal1">Loading...</a></li>
+              </ul>
+      </div>`
+  }
+</script>
+      
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content grey">
+      <h4>ArobicOS</h4>
+      <p>Build 0.1.1</p>
+      <p>Latest update: Terminal</p>
+      <button class="btn btn-large btn-green" onclick="reset()">Reset</button>
+    </div>
+    <div class="modal-footer grey darken-1">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Done</a>
+    </div>
+  </div>
+
+  <script>
+  function reset() {
+  swal({
+    title: "WARNING!",
+    text: "Are you sure you want to reset your device? This will delete all your files!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    if (willDelete) {
+      localStorage.setItem('info', '');
+      location.reload();
+    }
+  });
+}
+  </script>
+
+  <!-- finish this -->
+
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h4>Welcome</h4>
+      <p>Please enter your password</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+          
+
+
+<!-- desktop icons -->
+
+<div id="desktop">
+</div>
+
+<!-- fullscreen -->
+<div id="fullscreenelem"></div>
+
+<!-- desktop apps -->
+<div id="apps">
+</div>
+
+<!-- this could be cool to make the os custom -->
+<!-- CODE TUTORIAL ON AROBIC OS LATER-->
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large grey lighten-1">
+    <i class="large material-icons black">open_with</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating red tooltipped" data-position="left" data-tooltip="Refresh Screen" onclick="refreshScreen()"><i class="material-icons">refresh</i></a></li>
+    <li><a class="btn-floating blue lighten-2 tooltipped" data-position="left" data-tooltip="TaskManager" onclick="launchApp('TaskManager')"><i class="material-icons">dashboard</i></a></li>
+    <li><a class="btn-floating yellow darken-1 tooltipped modal-trigger" data-position="left" data-tooltip="Help Menu" href="#modal2"><i class="material-icons">help</i></a></li>
+    <li><a class="btn-floating green darken-1 tooltipped modal-trigger" data-position="left" id="username" data-tooltip="Loading..." href="#modal1"><i class="material-icons">person</i></a></li>
+  </ul>
+</div>
+<div id="modal2" class="modal">
+  <div class="modal-content grey">
+    <h4>Help</h4>
+    <h5>Quickly navigating apps</h5>
+    <p>Want to make your arobic experience 100% faster+better? Here are some quick shortcuts:</p>
+    <b>Close apps:</b><p> To close apps, Click on an app, click on the background, then press Q quickly twice.</p>
+    <b>Fullscreen apps:</b><p> To fullscreen apps, quickly press F twice. <i>Must have fullscreen enabled in the settings app!</i></p>
+    <h5>Installing new apps</h5>
+    <p>Getting bored of the default apps on your system? Well we have a built in package manager! Here's how to install a new package.</p>
+    <p>There are two options to getting new apps: <b>The app store and 3rd party packages.</b></p>
+    <p>For the app store, just click the app store icon that is installed on your device.</p>
+    <p>However, you can also install custom apps by following these steps:</p>
+    <p><b>1: Download any projects that are arobicOS supported.</b> Supported ArobicOS projects always have a install.arbp file in their directory.</p>
+    <p><b>2: Drag the file into the ui/custom folder.</b></p>
+    <p><b>3: Click on the package manager.</b> The package manager comes built in with arobic versions 0.0.2 and up, and looks like this. <i class="small material-icons">get_app</i></p>
+    <p><b>4: Select your install.abrp file. </b></p>
+    <p><b>5: Press the "Refresh" button in the menu bar and you are done!</b></p>
+    <h5>Create your own apps</h5>
+    <p>Making your own apps is easy aswell! To create your own apps, check the README.txt in the arobicOS folder.</p>
+    <script>
+      function trollHim() {
+        location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+      }
+    </script>
+  </div>
+  <div class="modal-footer grey darken-1">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Done</a>
+  </div>
+</div><!--onclick="launchApp('TaskManager')"--><!---->
+  <script>
+    //jquery time
+    $(document).ready(function(){
+      $('.tooltipped').tooltip();
+      $('.modal').modal();
+      $('.fixed-action-btn').floatingActionButton();
+  });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="./code/index.js"></script>
+</body>
+</html>

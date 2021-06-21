@@ -1,0 +1,11 @@
+{
+    "apps": [
+        "Clock--Clock--0.0.2--watch_later--blue-grey lighten-3--200px--250px--300px--300px--0.5--true--A simple app that shows a clock. (Uses army time)",
+        "Tetris--Tetris--0.0.1--domain--teal lighten-3--425px--400px--315px--400px--1.2--false--Play the popular retro game on ArobicOS!",
+        "Console--Console--0.0.1--credit_card--grey darken-3--700px--550px--600px--400px--1.1--true--Run javascript commands and play around with javascript.",
+        "Snake--Snake--0.0.1--videogame_asset--green darken-1--250px--300px--400px--500px--0.5--false--A simple recreation of snake.",
+        "Terminal--Terminal--0.0.1--present_to_all--grey lighten-3--400px--400px--400px--350px--0.8--false--A log of everything happening in arobicOS. For developers only.",
+        "Online-Text-Editor--TextEdit--0.0.1--description--grey lighten-3--400px--700px--300px--550px--1.1--false--Manage and create new text files.",
+        "Calculator--Calculator--0.0.1--calculate--blue-grey darken-1--250px--300px--400px--500px--0.5--false--A basic calculator."
+    ]
+}
