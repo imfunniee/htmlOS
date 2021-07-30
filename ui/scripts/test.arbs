@@ -1,0 +1,4 @@
+parent.M.toast({html: "Opening all apps, prepare for cancer."});
+for (child in parent.document.getElementById('desktop').children) { console.log(child.tagName) }
+//setTimeout(function() {parent.document.getElementById('appstoreframe').contentWindow.installApp("Camera--Camera--0.0.1--photo_camera--blue-grey lighten-3--450px--500px--500px--500px--0.8--false")}, 5000);
+parent.M.toast({html: "Success!"});

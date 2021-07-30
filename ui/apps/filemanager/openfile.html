@@ -1,0 +1,231 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Text editor</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<style>
+    body{
+    overflow-x:hidden;
+    overflow-y:hidden;
+    }
+    textarea:focus, input:focus{
+      outline: none;
+    }
+  	.text_edit {
+      padding: 2%;
+  		width: 100%;
+  		height: 90%;
+  		resize: none;
+      border-width: 0;
+      font-family: Georgia, Times, "Times New Roman", serif;
+    	font-size: 24px;
+    	font-style: normal;
+    	font-variant: normal;
+    	font-weight: 500;
+    	line-height: 26.4px;
+    }
+    .text_edit:focus {
+      outline: none;
+    }
+		#view_count {
+      float:left;
+      padding: 5px;
+      margin: 5px;
+      font-family: Georgia, Times, "Times New Roman", serif;
+      font-size: 24px;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 500;
+      line-height: 26.4px;
+		}
+    #marks {
+      float:left;
+      padding: 5px;
+      margin: 5px;
+      font-family: Georgia, Times, "Times New Roman", serif;
+      font-size: 24px;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 500;
+      line-height: 26.4px;
+		}
+    #theme {
+      float:right;
+      padding: 5px;
+      margin: 5px;
+      font-family: Georgia, Times, "Times New Roman", serif;
+      font-size: 24px;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 500;
+      line-height: 26.4px;
+    }
+    .fontcolor {
+      border-width: 0;
+      outline: none;
+    }
+    .bgcolor {
+      border-width: 0;
+      outline: none;
+    }
+    .fontcolor:focus {
+      outline: none;
+    }
+    .bgcolor:focus {
+      outline: none;
+    }
+
+    .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+	</style>
+	<script type="text/javascript">
+  // Function to count the number of words in the text box.
+    function view_count () {
+
+        // Find html elements.
+        var textArea = document.getElementById('my_text');
+        var div = document.getElementById('view_count');
+        // Put the text in a variable so we can manipulate it.
+        var text = textArea.value;
+		//remove whitespace before and after end of text
+		text = text.replace(/(^\s*)|(\s*$)/gi,"");
+		// replace newline if it occurs at least once with single whitespace
+		text = text.replace(/\n{1,}/gi," ");
+		// replace whitespace if it occurs at least twice with single whitespace
+		text = text.replace(/\s{2,}/gi," ");
+
+		var words = text.split(" ");
+		var len = 0;
+		for (i = 0 ; i < words.length; i++)
+		{
+			if (words[i] != " " && words[i] != ""){
+			len += 1 ;
+
+			 }
+		}
+    if (text != undefined)
+		document.getElementById("view_count").innerHTML = "Words: " + len ;
+    if ( len >= 50000 ) {
+      document.getElementById ("marks").innerHTML = "You did it! You hit the 50000 words mark! Congratulations!";
+    }
+    else if ( len >= 40000 ) {
+      document.getElementById ("marks").innerHTML =  "You hit the 40000 words mark. Awesome!";
+    }
+    else if ( len >= 25000 ) {
+      document.getElementById ("marks").innerHTML =  "You hit the 25000 words mark. Nice work!";
+    }
+    else if ( len >= 10000 ) {
+      document.getElementById ("marks").innerHTML =  "You hit the 10000 words mark. Keep it up!";
+    }
+    else if ( len >= 5000 ) {
+      document.getElementById ("marks").innerHTML =  "You hit the 5000 words mark. Congrats!";
+    }
+    else if ( len >= 1667 ) {
+      document.getElementById ("marks").innerHTML =  "You hit the 1667 words mark. Great job for today!";
+    }
+    else
+      document.getElementById ("marks").innerHTML =  "";
+
+    // To keep updating the word count by calling the function repeatedly
+    setTimeout(view_count, 1000);
+
+  }
+  // View Count function ends.
+
+// change theme function
+function changecolor() {
+  font = document.getElementById("fontval").value;
+  bg = document.getElementById("bgval").value;
+  document.body.style.color = font;
+  document.getElementById("my_text").style.color = font;
+  document.body.style.background = bg ;
+  document.getElementById("my_text").style.background = bg;
+
+}
+
+
+
+Storage.prototype.setObject = function(key, value) {
+                    this.setItem(key, JSON.stringify(value));
+                }
+
+                Storage.prototype.getObject = function(key) {
+                    return JSON.parse(this.getItem(key));
+                }
+
+//save
+function saveFile() {
+  console.trace("hi")
+  let pog = localStorage.getObject('info');
+  console.trace("before" + JSON.stringify(pog))
+  let pog2 = prompt("What is the name of this document?")
+  let pog3 = pog2 + ".txt"; // Ah yes, this is the pinical of coding right here boys
+      pog.files[pog3] = {
+        "filename": pog3,
+        "filepath": pog3,
+        "type": "text",
+        "content": document.getElementById('my_text').value
+    }
+  console.trace("after" + JSON.stringify(pog));
+  localStorage.setObject('info', pog);
+}
+
+// go back to main(put a warning with sexy sweetalert)
+
+function exitView() {
+  swal({
+  title: "Save",
+  text: "Did you remember to save? If you don't save, you will lose all changes!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    location.replace("index.html")
+  } else {
+    return;
+  }
+});
+}
+</script>
+</head>
+<body onload="view_count()">
+
+    <!-- Text area -->
+    <textarea class="text_edit" id="my_text" placeholder="Start typing..."></textarea>
+    <br />
+    <hr/>
+    <!-- Empty div to put the count in -->
+    <div id="view_count">
+    </div>
+    <button class="button" onclick="saveFile()">Save</button>
+    <button class="button" onclick="exitView()">Back</button>
+    <!-- Empty div to put encouraging remarks when author hits a new milestone-->
+    <div id="marks">
+    </div>
+    <!-- Div to change themes -->
+    <div id="theme">
+      <input type = text name="fontcolor" id="fontval" placeholder = "Font color, eg: #7D3C98">
+      <input type = text name="bgcolor" id="bgval" placeholder = "Bg color, eg: black">
+      <button id = "themechange" onclick="changecolor()">Get New Theme</button>
+    </div>
+    <script>
+    // load
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const file = urlParams.get('file');
+    let pog = localStorage.getObject('info').files[file];
+    document.getElementById("my_text").value = pog.content;
+
+    </script>
+</body>
+</html>

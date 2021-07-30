@@ -1,0 +1,72 @@
+/* iframe*/
+iframe {
+    border:none;
+}
+
+html 
+{
+ overflow: visible;
+ height: 100%;
+}
+ 
+
+.card {
+    width: 250px;
+    height: 300px;
+    resize: both;
+}
+.app, .appicon {
+    position: absolute;
+    resize: both;
+    cursor: pointer;
+}
+
+
+/* apps */
+#calculator, #snake, #console, #tetris, #pkginst, #filemanager, #Online-Text-Editor, #appstore {
+    display: none;
+}
+
+
+
+/* sus apps */
+
+#tetrisheader {
+    width: 425px;
+    height: 400px;
+}
+#pkginstheader {
+    width: 700px;
+    height: 250px;
+}
+
+#appstoreheader {
+    width: 700px;
+    height: 700px;
+}
+
+/* Slightly larger frame for slightly larger apps */
+
+#tetrisframe {
+    width: 315px;
+    height: 400px;
+    border: none;
+    /*overflow:hidden;*/
+    transform: scale(1.2); 
+    transform-origin: 0 0;
+}
+
+#appstoreframe {
+    width: 600px;
+    height: 550px;
+    border: none;
+    /*overflow:hidden;*/
+    transform: scale(1.1); 
+    transform-origin: 0 0;
+}
+
+/* icons for apps */
+.inline-icon {
+    vertical-align: bottom;
+    /*font-size: 18px !important;*/
+ }

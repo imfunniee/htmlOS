@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GlizzyOS</title>
+  <link href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    // Grab elements, create settings, etc.
+var video = document.getElementById('video');
+
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        //video.src = window.URL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.play();
+    });
+}
+
+/* Legacy code below: getUserMedia 
+else if(navigator.getUserMedia) { // Standard
+    navigator.getUserMedia({ video: true }, function(stream) {
+        video.src = stream;
+        video.play();
+    }, errBack);
+} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+    navigator.webkitGetUserMedia({ video: true }, function(stream){
+        video.src = window.webkitURL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+    navigator.mozGetUserMedia({ video: true }, function(stream){
+        video.srcObject = stream;
+        video.play();
+    }, errBack);
+}
+*/
+  </script>
+</head>
+
+<body>
+
+<!--
+	Ideally these elements aren't created until it's confirmed that the 
+	client supports video/camera, but for the sake of illustrating the 
+	elements involved, they are created with markup (not JavaScript)
+-->
+<video id="video" width="640" height="480" autoplay></video>
+<script>    // Elements for taking the snapshot
+  var video = document.getElementById('video');
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

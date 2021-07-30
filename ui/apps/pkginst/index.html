@@ -1,0 +1,58 @@
+<html>
+    <head>
+    </head>
+        <body>
+            <h1>ArobicOS Pkg Installer</h1>
+            <p id="funny">Please select a .abrp file(MUST BE IN A DIRECTORY WITH THE PACKAGE)</p>
+            <input type="file" id="file" name="file" enctype="multipart/form-data" />
+            <script>
+                Storage.prototype.setObject = function(key, value) {
+                    this.setItem(key, JSON.stringify(value));
+                }
+
+                Storage.prototype.getObject = function(key) {
+                    return JSON.parse(this.getItem(key));
+                }
+
+                document.getElementById('file').addEventListener('change', readFile, false);
+         
+                     function readFile (evt) {
+                         var files = evt.target.files;
+                         var file = files[0];
+                         var reader = new FileReader();
+                         reader.onload = function(event) {
+                         console.trace(event.target.result)
+                         let info = event.target.result.split("\n");
+                         if (typeof(Storage) != "undefined") {
+                            let pog = localStorage.getObject('info');
+                            console.trace("before" + JSON.stringify(pog))
+                            let pog2 = info[1].replace("\r", "");
+                                pog.apps[pog2] = {
+                                    "repo": info[0].replace("\r", ""),
+                                    "name": info[1].replace("\r", ""),
+                                    "version": info[2].replace("\r", ""),
+                                    "icon": info[3].replace("\r", ""),
+                                    "color": info[4].replace("\r", ""),
+                                    "cardw": info[5].replace("\r", ""),
+                                    "cardh": info[6].replace("\r", ""),
+                                    "framew": info[7].replace("\r", ""),
+                                    "frameh": info[8].replace("\r", ""),
+                                    "scale": info[9].replace("\r", ""),
+                                    "defaultapp": false,
+                                    "supportsfullscreen": info[10].replace("\r", "")
+                                }
+                                console.trace("after" + JSON.stringify(pog));
+                            localStorage.setObject('info', pog);
+                            document.getElementById("funny").innerHTML = "Done!";
+                            parent.refreshScreen(false);
+                            } else {
+                            alert("Error! Your browser does not support localStorage. This OS will not work as mentioned.")
+                        }
+                    }
+                        reader.readAsText(file)
+                    }
+                    
+
+                 </script>
+        </body>
+</html>

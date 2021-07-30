@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GlizzyOS</title>
+  <link href="https://fonts.googleapis.com/css?family=Trade+Winds&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+
+    Storage.prototype.setObject = function(key, value) {
+     this.setItem(key, JSON.stringify(value));
+    }
+
+ Storage.prototype.getObject = function(key) {
+   return JSON.parse(this.getItem(key));
+  }
+
+    // Funny app installer
+
+    function installApp(app) {
+        let info = app.split("--");
+          let pog = localStorage.getObject('info');
+          console.trace("before" + JSON.stringify(pog));
+          let pog2 = info[1];
+          pog.apps[pog2] = {
+            "repo": info[0],
+            "name": info[1],
+            "version": info[2],
+            "icon": info[3],
+            "color": info[4],
+            "cardw": info[5],
+            "cardh": info[6],
+            "framew": info[7],
+            "frameh": info[8],
+            "scale": info[9],
+            "defaultapp": false,
+            "supportsfullscreen": info[10],
+            "desc": info[11]
+          }
+          console.trace("after" + JSON.stringify(pog))
+          localStorage.setObject('info', pog);
+          parent.refreshScreen(false);
+    }
+
+    function addApps(json) {
+          json.apps.forEach(function(index, item) {
+            let appinfo = json.apps[item].split("--");
+            document.getElementById("apps").innerHTML += `    <li>
+      <div class="collapsible-header"><i class="material-icons">${appinfo[3]}</i>${appinfo[1]}</div>
+      <div class="collapsible-body"><span>${appinfo[11]}</span><button
+          class="btn btn-green" onclick="installApp('${json.apps[item]}')">Install</button></div>
+    </li>`
+          });
+        }//installApp(${json.apps[item]})
+
+    function loadApps() { // magnus not being a lazy cunt real??
+      fetch("appstore.json")
+        .then(response => response.json())
+        .then(json => addApps(json));
+    }
+    $(document).ready(function () {
+      $('.collapsible').collapsible();
+    });
+  </script>
+</head>
+
+<body onload="loadApps()">
+  <ul class="collapsible" id="apps">
+  </ul>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

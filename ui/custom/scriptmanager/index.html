@@ -1,0 +1,35 @@
+<html>
+    <head>
+    </head>
+        <body>
+            <h1>ArobicOS Script Manager BETA</h1>
+            <p id="funny">Please select a .arbs file(MUST BE IN UI/SCRIPTS FOLDER)</p>
+            <input type="file" id="file" name="file" enctype="multipart/form-data" />
+            <script>
+                Storage.prototype.setObject = function(key, value) {
+                    this.setItem(key, JSON.stringify(value));
+                }
+
+                Storage.prototype.getObject = function(key) {
+                    return JSON.parse(this.getItem(key));
+                }
+
+                document.getElementById('file').addEventListener('change', readFile, false);
+         
+                     function readFile (evt) {
+                         var files = evt.target.files;
+                         var file = files[0];
+                         var reader = new FileReader();
+                         reader.onload = function(event) {
+                         console.trace(event.target.result)
+                         let info = event.target.result.split("\n");
+                        info.forEach(function(index, item) {
+                            console.trace(eval(info[item]));
+                        });
+                    }
+                        reader.readAsText(file)
+                    }
+                    
+                 </script>
+        </body>
+</html>
